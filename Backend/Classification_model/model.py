@@ -2,6 +2,7 @@ from google.cloud import aiplatform
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 import os
+import streamlit as st
 
 # Load environment variables from .env
 load_dotenv()
@@ -16,8 +17,23 @@ def test_vertex_connection():
     print("🔄 Initializing Vertex AI client...")
 
     # Authenticate with the service account
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH)
-    aiplatform.init(project=PROJECT_ID, location=REGION, credentials=credentials)
+    # credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH)
+    # aiplatform.init(project=PROJECT_ID, location=REGION, credentials=credentials)
+    
+    # Authentication for Streamlit Cloud compatibility
+    if os.getenv("GOOGLE_APPLICATION_CREDENTIALS") and os.path.exists(os.getenv("GOOGLE_APPLICATION_CREDENTIALS")):
+        credentials = service_account.Credentials.from_service_account_file(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+    else:
+        # Fallback for Streamlit Cloud
+        import streamlit as st
+        credentials = service_account.Credentials.from_service_account_info(st.secrets["vertex"])
+
+    aiplatform.init(
+        project=st.secrets["vertex"]["project_id"],
+        location=st.secrets["vertex"]["REGION"],
+        credentials=credentials
+    )
+    
 
     print("✅ Connected to Vertex AI successfully.")
 
