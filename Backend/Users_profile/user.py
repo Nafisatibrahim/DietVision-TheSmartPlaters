@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from .save_profile import save_user_profile
+from httpx_oauth.oauth2 import OAuth2
 
 # Load environment variables
 load_dotenv(dotenv_path="./.env") # load .env from project root
@@ -30,14 +31,14 @@ SCOPE = "openid email profile"
 
 # Create OAuth2Component instance
 oauth2 = OAuth2Component(
-    CLIENT_ID,
-    CLIENT_SECRET,
-    AUTHORIZE_URL,
-    TOKEN_URL,
-    REFRESH_TOKEN_URL,
-    REVOKE_TOKEN_URL
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    authorize_endpoint=AUTHORIZE_URL,
+    token_endpoint=TOKEN_URL,
+    refresh_token_endpoint=REFRESH_TOKEN_URL,
+    revoke_token_endpoint=REVOKE_TOKEN_URL,
+    revoke_token_auth_method="client_secret_post" 
 )
-
 # Use for debugging purposes
 """# Load environment variables
 load_dotenv(dotenv_path="../../.env")
