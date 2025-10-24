@@ -19,9 +19,13 @@ REFRESH_TOKEN_URL = "https://oauth2.googleapis.com/token"
 REVOKE_TOKEN_URL = "https://oauth2.googleapis.com/revoke"
 
 # Credentials
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-REDIRECT_URI = "http://localhost:8501"
+CLIENT_ID = st.secrets["CLIENT_ID"] if "CLIENT_ID" in st.secrets else os.getenv("CLIENT_ID")
+CLIENT_SECRET = st.secrets["CLIENT_SECRET"] if "CLIENT_SECRET" in st.secrets else os.getenv("CLIENT_SECRET")
+REDIRECT_URI = (
+     "https://diet-vision-smartplaters.streamlit.app"
+     if not os.getenv("LOCAL_DEV")
+     else "http://localhost:8501"
+ )
 SCOPE = "openid email profile"
 
 # Create OAuth2Component instance

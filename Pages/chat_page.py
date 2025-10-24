@@ -6,6 +6,9 @@
 import pandas as pd
 import streamlit as st
 
+st.write(st.session_state.get("last_prediction"))
+
+
 # Define function to display chatbot
 def show_chat_page(user):
     st.title("🤖 Chat with Ella")
@@ -22,3 +25,5 @@ def show_chat_page(user):
     message = st.text_input("Ask Ella something:")
     if st.button("Send"):
         st.success(f"Ella says: That's a great question, {user.get('name')}! 🌟 (Mock reply)")
+
+

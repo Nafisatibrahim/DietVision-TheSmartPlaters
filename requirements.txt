@@ -2,4 +2,5 @@ streamlit
 google-generativeai
 python-dotenv
 streamlit-oauth
-google-cloud-aiplatform google-auth
+google-cloud-aiplatform 
+google-auth
