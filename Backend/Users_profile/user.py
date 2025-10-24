@@ -37,19 +37,24 @@ class GoogleOAuth2(BaseOAuth2):
             client_id=client_id,
             client_secret=client_secret,
             authorize_endpoint=authorize_url,
-            access_token_endpoint=token_url,  
-            revoke_token_endpoint=revoke_url,
-            revoke_token_auth_method="client_secret_post",  
+            access_token_endpoint=token_url,
         )
+        # just store revoke URL manually (not passed to super)
+        self.revoke_url = revoke_url
 
-# Instantiate custom client
+    async def revoke_token(self, token: str):
+        """Manually revoke token when sign-out."""
+        import httpx
+        async with httpx.AsyncClient() as client:
+            return await client.post(
+                self.revoke_url,
+                data={"token": token, "client_id": self.client_id, "client_secret": self.client_secret},
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+
+
+# Instantiate and wrap in OAuth2Component
 custom_oauth_client = GoogleOAuth2(
-    CLIENT_ID,
-    CLIENT_SECRET,
-    AUTHORIZE_URL,
-    TOKEN_URL,
-    REVOKE_TOKEN_URL
+    CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL, REVOKE_TOKEN_URL
 )
-
-# Pass that custom client to OAuth2Component
 oauth2 = OAuth2Component(oauth_client=custom_oauth_client)
