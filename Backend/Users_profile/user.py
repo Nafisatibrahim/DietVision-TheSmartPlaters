@@ -4,11 +4,12 @@ Enables users to sign in with Google, fetches their profile information,
 """
 import streamlit as st
 from streamlit_oauth import OAuth2Component
+from httpx_oauth.oauth2 import OAuth2
 from dotenv import load_dotenv
 import os
 import requests
 from .save_profile import save_user_profile
-from httpx_oauth.oauth2 import OAuth2
+
 
 # Load environment variables
 load_dotenv(dotenv_path="./.env") # load .env from project root
@@ -29,16 +30,30 @@ REDIRECT_URI = (
  )
 SCOPE = "openid email profile"
 
-# Create OAuth2Component instance
-oauth2 = OAuth2Component(
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
-    authorize_endpoint=AUTHORIZE_URL,
-    token_endpoint=TOKEN_URL,
-    refresh_token_endpoint=REFRESH_TOKEN_URL,
-    revoke_token_endpoint=REVOKE_TOKEN_URL,
-    revoke_token_auth_method="client_secret_post" 
+# Create a custom OAuth2 client
+class GoogleOAuth2(OAuth2):
+    def __init__(self, client_id, client_secret, authorize_url, token_url, revoke_token_url):
+        super().__init__(
+            client_id=client_id,
+            client_secret=client_secret,
+            authorize_endpoint=authorize_url,
+            token_endpoint=token_url,
+            revoke_token_endpoint=revoke_token_url,
+            revoke_token_auth_method="client_secret_post",  # ✅ fix
+        )
+
+# Instantiate custom client
+custom_oauth_client = GoogleOAuth2(
+    CLIENT_ID,
+    CLIENT_SECRET,
+    AUTHORIZE_URL,
+    TOKEN_URL,
+    REVOKE_TOKEN_URL
 )
+
+# Pass that custom client to OAuth2Component
+oauth2 = OAuth2Component(oauth_client=custom_oauth_client)
+
 # Use for debugging purposes
 """# Load environment variables
 load_dotenv(dotenv_path="../../.env")
