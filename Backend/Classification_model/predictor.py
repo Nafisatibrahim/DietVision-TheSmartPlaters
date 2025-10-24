@@ -5,6 +5,7 @@ Handles image classification requests to Vertex AI endpoint.
 
 from google.cloud import aiplatform
 from google.oauth2 import service_account
+import streamlit as st
 from dotenv import load_dotenv
 import base64
 import os
@@ -19,8 +20,21 @@ REGION = os.getenv("REGION")
 ENDPOINT_ID = os.getenv("ENDPOINT_ID")
 
 # Authenticate once globally
-credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH)
-aiplatform.init(project=PROJECT_ID, location=REGION, credentials=credentials)
+# credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_PATH)
+# aiplatform.init(project=PROJECT_ID, location=REGION, credentials=credentials)
+
+if os.getenv("GOOGLE_APPLICATION_CREDENTIALS") and os.path.exists(os.getenv("GOOGLE_APPLICATION_CREDENTIALS")):
+        credentials = service_account.Credentials.from_service_account_file(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+else:
+        # Fallback for Streamlit Cloud
+
+        credentials = service_account.Credentials.from_service_account_info(st.secrets["vertex"])
+
+aiplatform.init(
+        project=st.secrets["vertex"]["project_id"],
+        location=st.secrets["vertex"]["REGION"],
+        credentials=credentials
+    )
 
 # Create endpoint reference
 endpoint = aiplatform.Endpoint(
