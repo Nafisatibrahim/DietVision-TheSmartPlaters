@@ -4,3 +4,4 @@ python-dotenv
 streamlit-oauth
 google-cloud-aiplatform 
 google-auth
+httpx-oauth>=0.13.0
