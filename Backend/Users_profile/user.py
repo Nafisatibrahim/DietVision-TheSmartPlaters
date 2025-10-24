@@ -36,5 +36,6 @@ oauth2 = OAuth2Component(
     AUTHORIZE_URL,
     TOKEN_URL,
     REFRESH_TOKEN_URL,
-    REVOKE_TOKEN_URL
+    REVOKE_TOKEN_URL,
+    revocation_endpoint_auth_method="client_secret_post"
 )
