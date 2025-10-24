@@ -4,7 +4,7 @@ Enables users to sign in with Google, fetches their profile information,
 """
 import streamlit as st
 from streamlit_oauth import OAuth2Component
-from httpx_oauth.oauth2 import OAuth2
+from httpx_oauth.oauth2 import BaseOAuth2
 from dotenv import load_dotenv
 import os
 import requests
