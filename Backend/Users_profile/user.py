@@ -31,15 +31,15 @@ REDIRECT_URI = (
 SCOPE = "openid email profile"
 
 # Create a custom OAuth2 client
-class GoogleOAuth2(OAuth2):
-    def __init__(self, client_id, client_secret, authorize_url, token_url, revoke_token_url):
+class GoogleOAuth2(BaseOAuth2):
+    def __init__(self, client_id, client_secret, authorize_url, token_url, revoke_url):
         super().__init__(
             client_id=client_id,
             client_secret=client_secret,
             authorize_endpoint=authorize_url,
-            token_endpoint=token_url,
-            revoke_token_endpoint=revoke_token_url,
-            revoke_token_auth_method="client_secret_post",  # ✅ fix
+            access_token_endpoint=token_url,  
+            revoke_token_endpoint=revoke_url,
+            revoke_token_auth_method="client_secret_post",  
         )
 
 # Instantiate custom client
