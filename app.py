@@ -6,12 +6,21 @@ Handles dynamic page navigation
 # Import libraries
 import streamlit as st
 import requests
+import os
 from Backend.Users_profile.user import oauth2  # Import OAuth2Component
 from utils.state_manager import init_session_state  # Import session state initializer
 from utils.styling import apply_custom_styles     # Import custom styling function
 from Pages import home_page, upload_analyze_page
+from dotenv import load_dotenv
 
-# Defibe main entry point for DietVision.ai app
+load_dotenv()
+# Automatically choose redirect URI based on environment
+if os.getenv("LOCAL_DEV", "false").lower() == "true":
+    redirect_uri = "http://localhost:8501"
+else:
+    redirect_uri = "https://diet-vision-smartplaters.streamlit.app"
+
+# Define main entry point for DietVision.ai app
 def main():
     init_session_state()
     apply_custom_styles()
@@ -20,7 +29,7 @@ def main():
     if "token" not in st.session_state:
         result = oauth2.authorize_button(
             "Sign in with Google",
-            "http://localhost:8501", 
+            redirect_uri,
             "openid email profile",
             key="google_oauth_button"
         )
