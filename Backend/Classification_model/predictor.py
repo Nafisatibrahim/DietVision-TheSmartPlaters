@@ -24,22 +24,27 @@ ENDPOINT_ID = os.getenv("ENDPOINT_ID")
 # aiplatform.init(project=PROJECT_ID, location=REGION, credentials=credentials)
 
 if os.getenv("GOOGLE_APPLICATION_CREDENTIALS") and os.path.exists(os.getenv("GOOGLE_APPLICATION_CREDENTIALS")):
-        credentials = service_account.Credentials.from_service_account_file(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
-else:
-        # Fallback for Streamlit Cloud
-
-        credentials = service_account.Credentials.from_service_account_info(st.secrets["vertex"])
-
-aiplatform.init(
-        project=st.secrets["vertex"]["project_id"],
-        location=st.secrets["vertex"]["REGION"],
-        credentials=credentials
+    credentials = service_account.Credentials.from_service_account_file(
+        os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
     )
+    project_id = os.getenv("PROJECT_ID")
+    region = os.getenv("REGION")
+    endpoint_id = os.getenv("ENDPOINT_ID")
+else:
+    # Fallback for Streamlit Cloud
+    credentials = service_account.Credentials.from_service_account_info(st.secrets["vertex"])
+    project_id = st.secrets["vertex"]["project_id"]
+    region = st.secrets["vertex"]["REGION"]
+    endpoint_id = st.secrets["vertex"]["ENDPOINT_ID"]
+
+# Initialize Vertex AI client
+aiplatform.init(project=project_id, location=region, credentials=credentials)
 
 # Create endpoint reference
 endpoint = aiplatform.Endpoint(
-    endpoint_name=f"projects/{PROJECT_ID}/locations/{REGION}/endpoints/{ENDPOINT_ID}"
+    endpoint_name=f"projects/{project_id}/locations/{region}/endpoints/{endpoint_id}"
 )
+
 
 def predict_image_classification(image_path: str):
     """
@@ -72,6 +77,6 @@ def predict_image_classification(image_path: str):
 
 # Example test (run directly)
 if __name__ == "__main__":
-    test_image = "Backend\Classification_model\pizzaa.jpg"  # Replace with your local image
+    test_image = "Backend\Classification_model\pizzaa.jpg"
     results = predict_image_classification(test_image)
     print(json.dumps(results, indent=2))
