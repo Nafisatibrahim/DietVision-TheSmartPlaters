@@ -3,7 +3,6 @@ Styling Utils
 Applies custom CSS styles for DietVision.ai
 """
 
-# Import libraries
 import streamlit as st
 
 def apply_custom_styles():
@@ -51,6 +50,59 @@ def apply_custom_styles():
             margin: 1rem 0;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive Feature Section */
+        .feature-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 1.2rem;
+            flex: 1 1 300px;
+            min-width: 250px;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-box h3 {
+            color: #2E7D32;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-box p {
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        /* 📱 Mobile responsiveness */
+        @media (max-width: 768px) {
+            .feature-box {
+                flex: 1 1 100%;
+                min-width: 90%;
+                max-width: 95%;
+                padding: 1rem;
+            }
+            .feature-box h3 {
+                font-size: 1.1rem;
+            }
+            .feature-box p {
+                font-size: 0.9rem;
+            }
         }
 
         /* Footer */

@@ -1,71 +1,66 @@
 """
-This module provides functionality to save user profile information.
-It includes functions to update user details and store profile pictures.
+Styling Utils
+Applies custom CSS styles for DietVision.ai
 """
 
 # Import libraries
-import pandas as pd
-import os
 import streamlit as st
-import gspread
-from google.oauth2.service_account import Credentials
 
-# Define function to save user profile
-def save_user_profile(user_info, path="users.csv"):
-    # Save new user info to a CSV file
-    try:
-        if gspread and "vertex" in st.secrets:
-            st.write("🟢 Connecting to Google Sheets...")  # TEMP debug
-            creds = Credentials.from_service_account_info(st.secrets["vertex"])
-            client = gspread.authorize(creds)
-            sheet_id = st.secrets["vertex"]["spreadsheet_id"]
-            st.write(f"✅ Using sheet ID: {sheet_id}")  # TEMP debug
-            sheet = client.open_by_key(sheet_id).sheet1
+def apply_custom_styles():
+    """Inject global CSS for consistent design."""
+    st.markdown("""
+    <style>
+        /* Background gradient */
+        .stApp {
+            background: linear-gradient(135deg, #81C784 0%, #4CAF50 30%, #FF9800 70%, #FF6F00 100%);
+            background-attachment: fixed;
+        }
 
-            # Add header row if sheet is empty
-            if not sheet.get_all_values():
-                st.write("🟡 Creating headers...")
-                sheet.append_row(["Name", "Email", "Picture"])
+        /* Main content area */
+        .main .block-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+        }
 
-            # Prevent duplicate emails
-            existing = sheet.get_all_values()
-            existing_emails = [r[1] for r in existing[1:]] if len(existing) > 1 else []
-            if user_info.get("email") not in existing_emails:
-                sheet.append_row([
-                    user_info.get("name", ""),
-                    user_info.get("email", ""),
-                    user_info.get("picture", "")
-                ])
-                st.success("✅ User saved to Google Sheets!")
-            else:
-                st.info("ℹ️ User already exists in Google Sheets.")
-            return "✅ User saved to Google Sheets."
+        /* Buttons */
+        .stButton > button {
+            border-radius: 25px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 0.5rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
 
-    except Exception as e:
-        st.warning(f"⚠️ Google Sheets save failed, falling back to local CSV. Error: {e}")
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
 
-    # Fallback: Save to local CSV
-    df = pd.DataFrame([user_info])
+        /* Cards */
+        .custom-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-    # Create new file if missing or empty
-    if not os.path.exists(path) or os.path.getsize(path) == 0:
-        df.to_csv(path, index=False)
-        return "✅ User saved locally (new file)."
-
-    # Try reading existing data
-    try:
-        existing = pd.read_csv(path)
-    except pd.errors.EmptyDataError:
-        df.to_csv(path, index=False)
-        return "✅ User saved locally (recreated file)."
-
-    # Append only if not already present
-    if 'email' in existing.columns:
-        if user_info.get('email') not in existing['email'].values:
-            df.to_csv(path, mode='a', header=False, index=False)
-            return "✅ User appended to local CSV."
-        else:
-            return "ℹ️ User already exists in local CSV."
-    else:
-        df.to_csv(path, index=False)
-        return "⚠️ CSV missing email column — recreated file."
+        /* Footer */
+        .footer {
+            background: rgba(46, 125, 50, 0.9);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+    </style>
+    """, unsafe_allow_html=True)
