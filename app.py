@@ -150,13 +150,40 @@ def main():
     # Add bubble chat feature
     floating_chat()
 
-     # Sign out button
+    # Sign out button
     if st.sidebar.button("🚪 Sign Out"):
         for key in ["token", "auth_token_cached", "user"]:
             if key in st.session_state:
                 del st.session_state[key]
         st.success("Signed out successfully. Please sign in again.")
         st.rerun()
+
+    # Sidebar Footer - Social Links
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown(
+            """
+            <div style="text-align: center; font-size: 0.9rem; line-height: 1.6;">
+                Created with ❤️ by <strong>Nafisat Ibrahim</strong><br><br>
+                <a href="https://www.linkedin.com/in/nafisatibrahim/" target="_blank" style="text-decoration: none; margin: 0 6px;">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" width="18" style="vertical-align: middle;"/> 
+                    <span style="color:#0077b5;">LinkedIn</span>
+                </a><br>
+                <a href="https://github.com/Nafisatibrahim" target="_blank" style="text-decoration: none; margin: 0 6px;">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" width="18" style="vertical-align: middle;"/> 
+                    <span style="color:#333;">GitHub</span>
+                </a><br>
+                <a href="https://medium.com/@nafisatibrahim" target="_blank" style="text-decoration: none; margin: 0 6px;">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/medium.svg" width="18" style="vertical-align: middle;"/> 
+                    <span style="color:#000;">Medium</span>
+                </a>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+    
 
 # Run the app
 if __name__ == "__main__":
