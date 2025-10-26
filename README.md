@@ -26,3 +26,25 @@ Session management (sign in/out, refresh token)
     st.info("Tip: Use the sidebar to navigate between pages.")
     
 """
+
+Step 3: Next Upgrade Options
+
+Once the base chatbot works, we can add:
+
+🔗 Context awareness (e.g., user’s last meal analysis, health goals)
+
+💾 User profiles (store chats or preferences in a JSON/DB)
+
+🧠 Specialized prompts (“explain macros”, “suggest a breakfast plan”)
+
+🧑‍🎤 Custom UI (avatar, header, toggle between chatbot and analysis view)
+
+
+prompt = f"User just analyzed a plate with {detected_food}. Give short feedback and healthy alternatives."
+generate_response(prompt)
+
+<div class="chat-button" onclick="window.parent.postMessage('toggle_chat', '*')">
+    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" width="32"/>
+</div>
+
+background-color: #4CAF50;
