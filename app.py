@@ -7,6 +7,7 @@ Handles dynamic page navigation
 import streamlit as st
 import requests
 import os
+import json
 from Backend.Users_profile.user import oauth2  # Import OAuth2Component
 from utils.state_manager import init_session_state  # Import session state initializer
 from utils.styling import apply_custom_styles     # Import custom styling function
@@ -46,6 +47,16 @@ def main():
     # Restore cached token if available
     if "auth_token_cached" in st.session_state and "token" not in st.session_state:
         st.session_state["token"] = st.session_state["auth_token_cached"]
+    
+    # Try loading cached token from file (persists after refresh)
+    if "token" not in st.session_state and os.path.exists("token_cache.json"):
+        try:
+            with open("token_cache.json", "r") as f:
+                cached = json.load(f)
+            st.session_state["token"] = cached
+        except Exception:
+            pass
+
 
     # Authentication: handles sign-in
     if "token" not in st.session_state:
@@ -62,6 +73,11 @@ def main():
 
             # Save the token locally in Streamlit's session
             st.session_state["auth_token_cached"] = st.session_state.token
+
+            # Save token to local file (so it persists after refresh)
+            with open("token_cache.json", "w") as f:
+                json.dump(st.session_state.token, f)
+
             st.rerun()
 
         return
