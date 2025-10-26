@@ -55,7 +55,7 @@ def apply_custom_styles():
         /* Responsive Feature Section */
         .feature-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             gap: 1rem;
             margin-top: 1.5rem;
@@ -66,8 +66,7 @@ def apply_custom_styles():
             border-radius: 15px;
             padding: 1.2rem;
             flex: 1 1 300px;
-            min-width: 250px;
-            max-width: 320px;
+            width: 30%;
             text-align: center;
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;

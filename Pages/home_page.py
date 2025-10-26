@@ -13,9 +13,24 @@ def show_home_page(user):
 
     # Greeting
     if user and isinstance(user, dict):
-        st.markdown(f"### 👋 Hello, **{user.get('name', 'User')}!**")
-        if user.get("picture"):
-            st.image(user["picture"], width=100)
+        full_name = user.get("name", "User")
+        first_name = full_name.split(" ")[0] if full_name else "User"  # get only the first name
+
+        st.markdown(f"### 👋 Hello, **{first_name}!**")
+        
+        with st.sidebar:
+            st.markdown("---")
+            st.markdown(f"### **{user.get('name', 'User')}**")
+
+            if user.get("picture"):
+                st.image(
+                    user["picture"],
+                    width=100,
+                    caption="Logged in",
+                    use_container_width=False,
+                )
+            st.markdown("---")
+
     else:
         st.warning("Please sign in to access all features.")
         return  # stop rendering below if user is missing
