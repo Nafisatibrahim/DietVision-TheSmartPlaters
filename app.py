@@ -150,6 +150,14 @@ def main():
     # Add bubble chat feature
     floating_chat()
 
+     # Sign out button
+    if st.sidebar.button("🚪 Sign Out"):
+        for key in ["token", "auth_token_cached", "user"]:
+            if key in st.session_state:
+                del st.session_state[key]
+        st.success("Signed out successfully. Please sign in again.")
+        st.rerun()
+
     # Sidebar Footer - Social Links
     with st.sidebar:
         st.markdown("---")
@@ -174,13 +182,6 @@ def main():
             unsafe_allow_html=True
         )
 
-    # Sign out button
-        if st.sidebar.button("🚪 Sign Out"):
-            for key in ["token", "auth_token_cached", "user"]:
-                if key in st.session_state:
-                    del st.session_state[key]
-            st.success("Signed out successfully. Please sign in again.")
-            st.rerun()
 
 # Run the app
 if __name__ == "__main__":
