@@ -33,29 +33,21 @@ def show_home_page(user):
     """, unsafe_allow_html=True)
 
     # Feature summary cards
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown("""
-        <div class="custom-card">
-            <h4>📸 Smart Food Recognition</h4>
+    st.markdown("""
+    <div class="feature-container">
+        <div class="feature-box">
+            <h3>📸 Smart Food Recognition</h3>
             <p>Upload photos of your meals for instant nutritional analysis.</p>
         </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown("""
-        <div class="custom-card">
-            <h4>📊 Nutrition Dashboard</h4>
+        <div class="feature-box">
+            <h3>📊 Nutrition Dashboard</h3>
             <p>Track your calories, macros, and trends in one place.</p>
         </div>
-        """, unsafe_allow_html=True)
-
-    with col3:
-        st.markdown("""
-        <div class="custom-card">
-            <h4>🤖 Chat with Ella</h4>
+        <div class="feature-box">
+            <h3>🤖 Chat with Ella</h3>
             <p>Ask questions and get nutrition advice from your AI assistant.</p>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
+
 
