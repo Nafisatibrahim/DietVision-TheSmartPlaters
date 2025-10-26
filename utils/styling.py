@@ -113,5 +113,30 @@ def apply_custom_styles():
             border-radius: 15px;
             margin-top: 2rem;
         }
+                
+        /* --- Sidebar layout fixes --- */
+        section[data-testid="stSidebar"] {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh; /* take full screen height */
+            overflow-y: hidden !important; /* hide scroll */
+            padding-bottom: 1rem;
+        }
+
+        /* Sidebar inner content */
+        section[data-testid="stSidebar"] > div:first-child {
+            flex-grow: 1;
+            overflow-y: auto; /* allow content to scroll internally only if window too small */
+        }
+
+        /* Footer stays pinned */
+        .sidebar-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-top: auto;
+}
+
     </style>
     """, unsafe_allow_html=True)

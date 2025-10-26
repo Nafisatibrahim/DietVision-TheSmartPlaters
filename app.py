@@ -160,10 +160,10 @@ def main():
 
     # Sidebar Footer - Social Links
     with st.sidebar:
-        st.markdown("---")
-        st.markdown(
+        st.sidebar.markdown("---")
+        st.sidebar.markdown(
             """
-            <div style="text-align: center; font-size: 0.9rem; line-height: 1.6;">
+            <div class="sidebar-footer">
                 Created with ❤️ by <strong>Nafisat Ibrahim</strong><br><br>
                 <a href="https://www.linkedin.com/in/nafisatibrahim/" target="_blank" style="text-decoration: none; margin: 0 6px;">
                     <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" width="18" style="vertical-align: middle;"/> 
@@ -182,8 +182,6 @@ def main():
             unsafe_allow_html=True
         )
 
-
-    
 
 # Run the app
 if __name__ == "__main__":
