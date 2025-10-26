@@ -13,6 +13,7 @@ from utils.styling import apply_custom_styles     # Import custom styling functi
 from utils.ui_components import floating_chat  # Import floating chat component
 from Pages import home_page, upload_analyze_page, chat_page
 from Backend.Chatbot.chatbot import chatbot_ui  # Import chatbot UI
+from Backend.Users_profile.save_profile import save_user_profile
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -89,6 +90,14 @@ def main():
     )
     if resp.ok:
         st.session_state["user"] = resp.json()
+        user_info = st.session_state["user"]
+
+        # Save or update user profile in Google Sheets
+        save_user_profile({
+            "name": user_info.get("name", ""),
+            "email": user_info.get("email", ""),
+            "picture": user_info.get("picture", "")
+    })
     else:
         st.error("❌ Failed to fetch user info. Please sign in again.")
         del st.session_state["token"]

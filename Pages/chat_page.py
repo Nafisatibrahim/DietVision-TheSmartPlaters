@@ -13,7 +13,6 @@ st.write(st.session_state.get("last_prediction"))
 # Display the chat interface
 def show_chat_page(user):
     st.title("🤖 Chat with Ella – Your AI Nutrition Assistant")
-    st.sidebar.title("🍽️ DietVision.ai Chat")
 
     # Call the chatbot UI function to render the chat interface
     if user and isinstance(user, dict):
@@ -30,11 +29,16 @@ def show_chat_page(user):
 
     # Intro
     st.markdown("""
-        Welcome to **Ella**, your friendly AI-powered nutrition assistant.  
-        Ask questions about meals, ingredients, healthier substitutions, or balanced eating tips.  
-        Ella will analyze your request and give personalized, evidence-based advice. 🌿
-        ---
-    """)
+        <style>
+        /* Normalize paragraph text */
+        div.stMarkdown p {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+            color: #2E2E2E !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
 
     # Render the chatbot UI
     chatbot_ui(compact=False)

@@ -47,10 +47,6 @@ def generate_response(prompt):
     
 def chatbot_ui(compact: bool = False):
     """Displays Ella chat UI. Compact=True makes it fit smaller popups."""
-    
-    # Hide the big title in compact mode
-    if not compact:
-        st.title("💬 Ella – Your AI Nutrition Assistant")
 
     # Initialize chat history
     if "messages" not in st.session_state:

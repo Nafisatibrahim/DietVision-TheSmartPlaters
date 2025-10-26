@@ -7,3 +7,5 @@ google-auth
 pandas
 requests
 streamlit-javascript
+gspread 
+google-auth
