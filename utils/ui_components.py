@@ -7,90 +7,71 @@ from Backend.Chatbot.chatbot import chatbot_ui
 
 
 def floating_chat():
-    """Renders a floating chat bubble that toggles Ella's chat window."""
+    """Adds a chat button at the bottom of the sidebar that opens Ella's chat window on the main page."""
     if "show_chat" not in st.session_state:
         st.session_state["show_chat"] = False
 
-    # --- Floating button + popup CSS ---
-    st.markdown("""
-        <style>
-        .chat-button {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: #FF6F00;
-            color: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
-            text-align: center;
-            line-height: 60px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        .chat-button:hover {
-            background-color: #E65C00;
-            transform: scale(1.05);
-        }
-        .chat-popup {
-            position: fixed;
-            bottom: 100px;
-            right: 25px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            width: 380px;
-            max-height: 550px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            z-index: 99;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    # --- Sidebar button at the bottom ---
+    with st.sidebar:
+        st.markdown("<br><br><br><br><br><br><br>", unsafe_allow_html=True)  # spacing
+        st.markdown("---")
+        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
+        if st.button("💬 Chat with Ella", key="sidebar_chat_button"):
+            st.session_state["show_chat"] = not st.session_state["show_chat"]
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- Actual floating button ---
-    # Use a unique key so it doesn’t conflict across pages
-    if st.button("💬", key="floating_chat_button"):
-        st.session_state["show_chat"] = not st.session_state["show_chat"]
-
-    # Move button to bottom-right using CSS (Streamlit positions it inline by default)
-    st.markdown("""
-        <style>
-        div[data-testid="stButton"][key="floating_chat_button"] {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 100;
-        }
-        div[data-testid="stButton"][key="floating_chat_button"] > button {
-            background-color: #FF6F00 !important;
-            color: white !important;
-            border: none !important;
-            border-radius: 50% !important;
-            width: 60px !important;
-            height: 60px !important;
-            font-size: 26px !important;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25) !important;
-        }
-        div[data-testid="stButton"][key="floating_chat_button"] > button:hover {
-            background-color: #E65C00 !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # --- Show chat popup when toggled ---
+    # --- If toggled, show popup on main page ---
     if st.session_state["show_chat"]:
-        st.session_state["chat_context"] = "floating"
+        st.markdown(
+            """
+            <style>
+            .chat-popup {
+                position: fixed;
+                bottom: 90px;
+                right: 40px;
+                background: #ffffff;
+                border: 1px solid #ddd;
+                border-radius: 15px;
+                width: 400px;
+                max-height: 550px;
+                overflow: hidden;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+                z-index: 9999;
+                animation: fadeInUp 0.3s ease;
+            }
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .chat-close {
+                text-align: right;
+                padding: 6px 10px 0 0;
+                font-size: 18px;
+                cursor: pointer;
+                color: #FF6F00;
+                font-weight: bold;
+            }
+            .chat-close:hover {
+                color: #E65C00;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.markdown('<div class="chat-popup">', unsafe_allow_html=True)
-        chatbot_ui(compact=True) # compact mode for smaller popup
+        st.markdown('<div class="chat-close" onclick="window.parent.postMessage({type:\'close_chat\'}, \'*\')">✖</div>', unsafe_allow_html=True)
+        chatbot_ui()
         st.markdown('</div>', unsafe_allow_html=True)
-    else:
-        st.session_state["chat_context"] = "default"
+
+        # Add JS listener to close chat
+        from streamlit_javascript import st_javascript
+        event = st_javascript("""
+            await new Promise(resolve => {
+                window.addEventListener("message", e => {
+                    if (e.data?.type === "close_chat") resolve("close_chat");
+                }, {once: true});
+            });
+        """)
+        if event == "close_chat":
+            st.session_state["show_chat"] = False

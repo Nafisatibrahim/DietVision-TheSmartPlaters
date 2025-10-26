@@ -24,8 +24,23 @@ else:
 
 # Define main entry point for DietVision.ai app
 def main():
+    # Initialize session state and apply custom styles
     init_session_state()
     apply_custom_styles()
+
+        # Add intro before authentication
+    if "token" not in st.session_state:
+        st.markdown("""
+            <div style="background-color:#FF6F00;padding:10px;border-radius:10px;margin-bottom:20px;">
+                <h2 style="color:white;">🍽️ Welcome to DietVision.ai!</h2>
+                <p style="color:white;font-size:1.1rem;">
+                    Your AI-powered nutrition assistant. Upload meal photos, get instant nutritional analysis, 
+                    and chat with Ella for personalized diet advice! 💬
+                </p> 
+            </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("Please sign in with your Google account to continue.")
 
     # Restore cached token if available
     if "auth_token_cached" in st.session_state and "token" not in st.session_state:
