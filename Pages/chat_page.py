@@ -45,4 +45,4 @@ def show_chat_page(user):
 
 
 if __name__ == "__main__":
-    show_chat_page()
+    show_chat_page(st.session_state.get("user", {}))

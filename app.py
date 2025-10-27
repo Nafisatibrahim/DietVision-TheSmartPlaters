@@ -12,7 +12,7 @@ from Backend.Users_profile.user import oauth2  # Import OAuth2Component
 from utils.state_manager import init_session_state  # Import session state initializer
 from utils.styling import apply_custom_styles     # Import custom styling function
 from utils.ui_components import floating_chat  # Import floating chat component
-from Pages import home_page, upload_analyze_page, chat_page
+from Pages import home_page, upload_analyze_page, chat_page, profile_page
 from Backend.Chatbot.chatbot import chatbot_ui  # Import chatbot UI
 from Backend.Users_profile.save_profile import save_user_profile
 from dotenv import load_dotenv
@@ -114,10 +114,15 @@ def main():
             "picture": user_info.get("picture", "")
     })
     else:
-        st.error("❌ Failed to fetch user info. Please sign in again.")
-        del st.session_state["token"]
+        # Handle failed user info fetch
+        st.warning("🔒 Session expired. Please sign in again.")
+        for key in ["token", "auth_token_cached", "user"]:
+            st.session_state.pop(key, None)
+        if os.path.exists("token_cache.json"):
+            os.remove("token_cache.json")
         st.rerun()
         return
+
 
     # Get logged user info
     user = st.session_state.get("user", {})
@@ -142,7 +147,7 @@ def main():
     elif page == "🤖 Chat":
         chat_page.show_chat_page(user)
     elif page == "👤 Profile":
-        st.info("Profile page coming soon...")
+        profile_page.show_profile_page(user)
 
     # Add bubble chat feature
     floating_chat()
