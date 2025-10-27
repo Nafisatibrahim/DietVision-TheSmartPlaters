@@ -132,9 +132,6 @@ def main():
         key="nav"
     )
 
-    st.sidebar.markdown("---")
-    st.sidebar.info("AI-powered nutrition assistant. Prototype version.")
-
     # 🧩 Navigation: Page routing to corresponding functions
     if page == "🏠 Home":
         home_page.show_home_page(user)

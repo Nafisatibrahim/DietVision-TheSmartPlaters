@@ -118,16 +118,16 @@ def apply_custom_styles():
         section[data-testid="stSidebar"] {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 100vh; /* take full screen height */
-            overflow-y: hidden !important; /* hide scroll */
+            height: auto !important; /* allow natural fit */
+            min-height: 100vh; /* still fills screen */
+            overflow-y: auto !important; /* scroll only if too long */
             padding-bottom: 1rem;
         }
 
         /* Sidebar inner content */
         section[data-testid="stSidebar"] > div:first-child {
-            flex-grow: 1;
-            overflow-y: auto; /* allow content to scroll internally only if window too small */
+            flex-grow: 0; /* prevent forced stretching */
+            overflow-y: visible;
         }
 
         /* Footer stays pinned */
@@ -135,12 +135,12 @@ def apply_custom_styles():
             text-align: center;
             font-size: 0.9rem;
             line-height: 1.6;
-            margin-top: auto;
+            margin-top: 1rem;
         }
 
         /* Reduce large sidebar gaps */
         section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
-            margin-bottom: 0.5rem !important;  /* tighter spacing between blocks */
+            margin-bottom: 0.4rem !important;
         }
 
         /* Make buttons closer to profile section */
@@ -153,8 +153,6 @@ def apply_custom_styles():
         section[data-testid="stSidebar"] img {
             margin-bottom: 0.2rem !important;
         }
-
-}
 
     </style>
     """, unsafe_allow_html=True)
