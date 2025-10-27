@@ -136,6 +136,24 @@ def apply_custom_styles():
             font-size: 0.9rem;
             line-height: 1.6;
             margin-top: auto;
+        }
+
+        /* Reduce large sidebar gaps */
+        section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+            margin-bottom: 0.5rem !important;  /* tighter spacing between blocks */
+        }
+
+        /* Make buttons closer to profile section */
+        section[data-testid="stSidebar"] button {
+            margin-top: 0.3rem !important;
+            margin-bottom: 0.3rem !important;
+        }
+
+        /* Reduce spacing after profile image and name */
+        section[data-testid="stSidebar"] img {
+            margin-bottom: 0.2rem !important;
+        }
+
 }
 
     </style>
