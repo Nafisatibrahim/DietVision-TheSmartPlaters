@@ -157,7 +157,6 @@ def main():
 
     # Sidebar Footer - Social Links
     with st.sidebar:
-        st.sidebar.markdown("---")
         st.sidebar.markdown(
             """
             <div class="sidebar-footer">
