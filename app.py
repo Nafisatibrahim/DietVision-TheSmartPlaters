@@ -154,6 +154,47 @@ def main():
                 del st.session_state[key]
         st.success("Signed out successfully. Please sign in again.")
         st.rerun()
+    # --- Sign Out button pinned bottom-right of sidebar ---
+    import streamlit.components.v1 as components
+
+    components.html("""
+    <style>
+        .signout-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            background: linear-gradient(45deg, #FF6F00, #FF9800);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 9999;
+        }
+        .signout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+
+    <button onclick="window.parent.postMessage({type: 'signout'}, '*')" class="signout-btn">
+        🚪 Sign Out
+    </button>
+    """, height=0)
+
+    # --- Capture sign-out click from frontend ---
+    msg = st.experimental_get_query_params()
+    if "signout" in st.session_state or st.session_state.get("_signout_clicked", False):
+        for key in ["token", "auth_token_cached", "user"]:
+            st.session_state.pop(key, None)
+        st.success("Signed out successfully. Please sign in again.")
+        st.rerun()
+
+    # Listen to messages from the frontend
+    st.experimental_set_query_params()  # ensures reactivity
+
 
     # Sidebar Footer - Social Links
     with st.sidebar:
