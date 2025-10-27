@@ -24,8 +24,19 @@ def show_chat_page(user):
         return
     
     # Show any last prediction if available
-    if "last_prediction" in st.session_state:
-        st.write(f"🍱 Last analyzed meal: **{st.session_state['last_prediction']}**")
+    pred = st.session_state.get("last_prediction")
+    if pred:
+        food = pred.get("food_name")
+        conf = pred.get("confidence")
+        st.markdown(f"**🍱 Last analyzed meal:** {food}  "
+                    f"{f'· {conf:.2f}% confidence' if conf is not None else ''}")
+
+        # (Optional) show only top-5 alternatives in an expander
+        top5 = pred.get("top5")
+        if top5:
+            with st.expander("See top-5 alternatives"):
+                for name, score in top5:
+                    st.write(f"- {name} — {score*100:.1f}%")
 
     # Intro
     st.markdown("""
