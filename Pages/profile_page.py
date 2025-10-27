@@ -6,6 +6,7 @@ Display user's information and account details.
 import streamlit as st
 import base64
 from datetime import datetime
+from Backend.Users_profile.save_preferences import save_user_preferences
 
 def show_profile_page(user):
     st.title("👤 Your Profile")
@@ -70,7 +71,7 @@ def show_profile_page(user):
         st.session_state.editable_bio = st.text_area("Bio", st.session_state.editable_bio, height=100)
         st.text_input("Email", email, disabled=True)
 
-        if st.button("💾 Save Changes"):
+        if st.button("💾 Save Changes", key="save_changes"):
             st.success("✅ Profile updated successfully!")
             user["name"] = st.session_state.editable_name
             user["bio"] = st.session_state.editable_bio
@@ -139,20 +140,29 @@ def show_profile_page(user):
                                         default=st.session_state.user_profile.get('dietary_preferences', []))
     
     # Save profile
-    if st.button("💾 Save Profile"):
+    if st.button("💾 Save Profile", key="save_profile"):
         st.session_state.user_profile = {
-            'age': age,
-            'sex': sex,
-            'country': country,
-            'ethnicity': ethnicity,
-            'cuisine': cuisine,
-            'activity_level': activity_level,
-            'health_conditions': health_conditions,
-            'goals': goals,
-            'dietary_preferences': dietary_preferences,
-            'updated_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            "age": age,
+            "sex": sex,
+            "country": country,
+            "ethnicity": ethnicity,
+            "cuisine": cuisine,
+            "activity_level": activity_level,
+            "health_conditions": health_conditions,
+            "goals": goals,
+            "dietary_preferences": dietary_preferences,
+            "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-        st.success("✅ Profile saved successfully!")
+
+        with st.spinner("Saving your preferences..."):
+            result = save_user_preferences(
+                email=user.get("email", ""),
+                preferences=st.session_state.user_profile
+            )
+
+            st.success("✅ Profile saved successfully!")
+            st.info(result)
+
 
     # Display current profile
     if st.session_state.user_profile:
@@ -169,6 +179,7 @@ def show_profile_page(user):
             <p><strong>Dietary Preferences:</strong> {', '.join(profile.get('dietary_preferences', ['Not set']))}</p>
         </div>
         """, unsafe_allow_html=True)
+
 
     # Account Settings Section
     st.markdown("<br>", unsafe_allow_html=True)

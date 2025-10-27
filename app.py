@@ -108,11 +108,17 @@ def main():
         user_info = st.session_state["user"]
 
         # Save or update user profile in Google Sheets
-        save_user_profile({
-            "name": user_info.get("name", ""),
-            "email": user_info.get("email", ""),
-            "picture": user_info.get("picture", "")
-    })
+        if "user_saved" not in st.session_state:
+            try:
+                save_user_profile({
+                    "name": user_info.get("name", ""),
+                    "email": user_info.get("email", ""),
+                    "picture": user_info.get("picture", "")
+                })
+                st.session_state["user_saved"] = True  # mark as saved
+            except Exception as e:
+                st.warning(f"⚠️ Unable to sync with Google Sheets. Error: {e}")
+                
     else:
         # Handle failed user info fetch
         st.warning("🔒 Session expired. Please sign in again.")
