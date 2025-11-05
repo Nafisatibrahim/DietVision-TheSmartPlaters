@@ -36,6 +36,9 @@ def load_user_profile(email, path="users.csv"):
     Returns:
         dict: User profile data or None if not found
     """
+
+    email = email.strip().lower()
+
     # Try Google Sheets first
     try:
         client, sheet_id = get_sheets_client()
@@ -43,28 +46,33 @@ def load_user_profile(email, path="users.csv"):
             spreadsheet = client.open_by_key(sheet_id)
             worksheet_names = [ws.title.lower().strip() for ws in spreadsheet.worksheets()]
             
-            if "user profile" in worksheet_names:
-                sheet = next(ws for ws in spreadsheet.worksheets() 
-                           if ws.title.lower().strip() == "user profile")
+            sheet = None
+            for ws in spreadsheet.worksheets():
+                if ws.title.lower().strip() in ["user profile", "users", "profile", "user profiles"]:
+                    sheet = ws
+                    break
+
+            if not sheet:
+                sheet = spreadsheet.add_worksheet(title="User Profile", rows=1000, cols=20)
                 
-                all_data = sheet.get_all_values()
-                if len(all_data) > 1:
-                    headers = all_data[0]
-                    rows = all_data[1:]
+            all_data = sheet.get_all_values()
+            if len(all_data) > 1:
+                rows = all_data[1:]  # skip header row
+
+                # Compare emails case-insensitively
+                for row in rows:
+                    if len(row) > 2 and row[2].strip().lower() == email:
+                        return {
+                            'name': f"{row[0]} {row[1]}".strip(),
+                            'first_name': row[0],
+                            'last_name': row[1],
+                            'email': row[2],
+                            'picture': row[3] if len(row) > 3 else '',
+                            'signup_date': row[4] if len(row) > 4 else '',
+                            'signin_method': row[5] if len(row) > 5 else '',
+                            'last_active': row[6] if len(row) > 6 else ''
+                        }
                     
-                    # Find user by email (email is in column 2, index 2)
-                    for row in rows:
-                        if len(row) > 2 and row[2] == email:
-                            return {
-                                'name': f"{row[0]} {row[1]}".strip(),
-                                'first_name': row[0],
-                                'last_name': row[1],
-                                'email': row[2],
-                                'picture': row[3] if len(row) > 3 else '',
-                                'signup_date': row[4] if len(row) > 4 else '',
-                                'signin_method': row[5] if len(row) > 5 else '',
-                                'last_active': row[6] if len(row) > 6 else ''
-                            }
     except Exception as e:
         print(f"Error loading from Google Sheets: {e}")
     
@@ -72,6 +80,7 @@ def load_user_profile(email, path="users.csv"):
     try:
         if os.path.exists(path):
             df = pd.read_csv(path)
+            df["Email"] = df["Email"].str.lower().str.strip()
             user_data = df[df['Email'] == email]
             if not user_data.empty:
                 row = user_data.iloc[0]
@@ -110,16 +119,19 @@ def save_user_profile(user_info, path="users.csv"):
             worksheet_names = [ws.title.lower().strip() for ws in spreadsheet.worksheets()]
             
             # Get or create sheet
-            if "user profile" in worksheet_names:
-                sheet = next(ws for ws in spreadsheet.worksheets() 
-                           if ws.title.lower().strip() == "user profile")
-            else:
+            sheet = None
+            for ws in spreadsheet.worksheets():
+                if ws.title.lower().strip() in ["user profile", "users", "profile", "user profiles"]:
+                    sheet = ws
+                    break
+
+            if not sheet:
                 sheet = spreadsheet.add_worksheet(title="User Profile", rows=1000, cols=20)
-            
+
             # Extract core fields
             full_name = user_info.get("name", "")
             first_name, last_name = (full_name.split(" ", 1) + [""])[:2]
-            email = user_info.get("email", "")
+            email = user_info.get("email", "").strip().lower()
             picture = user_info.get("picture", "")
             signin_method = "Google OAuth"
             signup_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -138,7 +150,7 @@ def save_user_profile(user_info, path="users.csv"):
             # Read existing data
             existing = sheet.get_all_values()
             rows = existing[1:] if len(existing) > 1 else []
-            existing_emails = [r[2] for r in rows if len(r) > 2]
+            existing_emails = [r[2].strip().lower() for r in rows if len(r) > 2]
             
             if email in existing_emails:
                 # Update existing user
@@ -181,9 +193,10 @@ def save_user_profile(user_info, path="users.csv"):
         
         existing = pd.read_csv(path)
         if 'Email' in existing.columns:
-            if user_info.get('email') in existing['Email'].values:
-                existing.loc[existing['Email'] == user_info.get('email'), df.columns] = df.values
-                existing.to_csv(path, index=False)
+            existing["Email"] = existing["Email"].str.lower().str.strip()  # normalize existing
+            if email in existing['Email'].values:
+                existing.loc[existing['Email'] == email, df.columns] = df.values
+                existing.to_csv(path, index=False)      
                 return (True, "🔄 Profile updated locally (CSV)")
             else:
                 df.to_csv(path, mode='a', header=False, index=False)

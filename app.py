@@ -142,20 +142,20 @@ def main():
             except Exception as e:
                 st.warning(f"⚠️ Unable to sync with Google Sheets. Error: {e}")
 
-    # 🔄 Load user profile and preferences after login
-    email = user_info.get("email", "")
-    if email:
-        profile, prefs = load_user_data(email)
+        # 🔄 Load user profile and preferences after login
+        email = user_info.get("email", "")
+        if email:
+            profile, prefs = load_user_data(email)
 
-        if profile:
-            st.session_state["user_info"] = profile
-        if prefs:
-            st.session_state["user_preferences"] = prefs
-            st.session_state["user_profile"] = prefs  # alias for profile_page
+            if profile:
+                st.session_state["user_info"] = profile
+            if prefs:
+                st.session_state["user_preferences"] = prefs
+                st.session_state["user_profile"] = prefs  # alias for profile_page
 
-        if (profile or prefs) and "profile_restored" not in st.session_state:
-            st.toast("✅ Welcome back! Your profile has been restored.", icon="🌿")
-            st.session_state["profile_restored"] = True
+            if (profile or prefs) and "profile_restored" not in st.session_state:
+                st.toast("✅ Welcome back! Your profile has been restored.", icon="🌿")
+                st.session_state["profile_restored"] = True
 
                 
     else:
@@ -199,7 +199,7 @@ def main():
 
     # Sign out button
     if st.sidebar.button("🚪 Sign Out"):
-        for key in ["token", "auth_token_cached", "user"]:
+        for key in ["token", "auth_token_cached", "user", "profile_restored"]:
             if key in st.session_state:
                 del st.session_state[key]
         st.success("Signed out successfully. Please sign in again.")

@@ -9,3 +9,4 @@ requests
 streamlit-javascript
 gspread 
 google-auth
+matplotlib

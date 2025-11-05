@@ -38,11 +38,23 @@ def show_profile_page(user):
     # Load existing profile from Google Sheets on first page visit
     if 'profile_loaded' not in st.session_state:
         st.session_state.profile_loaded = True
-        
+    
+        # Load both profile (basic info) and preferences (nutrition info)
+        saved_profile = load_user_profile(email)
         saved_prefs = load_user_preferences(email)
+
+        # Merge both if available
+        st.session_state.user_profile = {}
+        if saved_profile:
+            st.session_state.user_profile.update(saved_profile)
         if saved_prefs:
-            st.session_state.user_profile = saved_prefs
-            st.info("✅ Loaded your profile from Google Sheets!")
+            st.session_state.user_profile.update(saved_prefs)
+        
+        if saved_profile or saved_prefs:
+            st.info("✅ Your saved profile and preferences have been loaded!")
+    else:
+        st.info("👋 Welcome, new user! Complete your profile to get personalized recommendations.")
+
 
     # Profile Header
     st.markdown("""

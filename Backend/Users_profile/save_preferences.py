@@ -60,11 +60,11 @@ def load_user_preferences(email, path="user_preferences.csv"):
                                 'sex': row[2] if len(row) > 2 else '',
                                 'country': row[3] if len(row) > 3 else '',
                                 'ethnicity': row[4] if len(row) > 4 else '',
-                                'cuisine': row[5].split(", ") if len(row) > 5 and row[5] else [],
+                                'cuisine': [x.strip() for x in row[5].split(", ") if x.strip()] if len(row) > 5 and row[5] else [],
                                 'activity_level': row[6] if len(row) > 6 else '',
-                                'health_conditions': row[7].split(", ") if len(row) > 7 and row[7] else [],
-                                'goals': row[8].split(", ") if len(row) > 8 and row[8] else [],
-                                'dietary_preferences': row[9].split(", ") if len(row) > 9 and row[9] else [],
+                                'health_conditions': [x.strip() for x in row[7].split(", ") if x.strip()] if len(row) > 7 and row[7] else [],
+                                'goals': [x.strip() for x in row[8].split(", ") if x.strip()] if len(row) > 8 and row[8] else [],
+                                'dietary_preferences': [x.strip() for x in row[9].split(", ") if x.strip()] if len(row) > 9 and row[9] else [],
                                 'updated_at': row[10] if len(row) > 10 else ''
                             }
     except Exception as e:
@@ -82,11 +82,11 @@ def load_user_preferences(email, path="user_preferences.csv"):
                     'sex': row.get('Sex', ''),
                     'country': row.get('Country', ''),
                     'ethnicity': row.get('Ethnicity', ''),
-                    'cuisine': row.get('Cuisine', '').split(", ") if row.get('Cuisine') else [],
+                    'cuisine': [x.strip() for x in str(row.get('Cuisine', '')).split(", ") if x.strip()] if row.get('Cuisine') else [],
                     'activity_level': row.get('Activity Level', ''),
-                    'health_conditions': row.get('Health Conditions', '').split(", ") if row.get('Health Conditions') else [],
-                    'goals': row.get('Goals', '').split(", ") if row.get('Goals') else [],
-                    'dietary_preferences': row.get('Dietary Preferences', '').split(", ") if row.get('Dietary Preferences') else [],
+                    'health_conditions': [x.strip() for x in str(row.get('Health Conditions', '')).split(", ") if x.strip()] if row.get('Health Conditions') else [],
+                    'goals': [x.strip() for x in str(row.get('Goals', '')).split(", ") if x.strip()] if row.get('Goals') else [],
+                    'dietary_preferences': [x.strip() for x in str(row.get('Dietary Preferences', '')).split(", ") if x.strip()] if row.get('Dietary Preferences') else [],
                     'updated_at': row.get('Updated At', '')
                 }
     except Exception as e:
