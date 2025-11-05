@@ -78,7 +78,25 @@ def show_upload_analyze_page(user):
                     # --- 🔍 Fetch nutritional data from cached database ---
                     df_nutrients = st.session_state.get("nutrient_database", pd.DataFrame())
                     if not df_nutrients.empty:
-                        match = df_nutrients[df_nutrients["Food Class"].str.lower() == food_name.lower()]
+                
+                        # Normalize and match more flexibly
+                        df_nutrients["Food Class"] = (
+                            df_nutrients["Food Class"].str.lower().str.replace("_", " ").str.strip()
+                        )
+                        food_name_clean = food_name.lower().replace("_", " ").strip()
+
+                        # Try partial and fuzzy matching
+                        match = df_nutrients[
+                            df_nutrients["Food Class"].str.contains(food_name_clean, na=False)
+                        ]
+
+                        # If still no match, try reversed order (e.g., "chicken grilled" -> "grilled chicken")
+                        if match.empty:
+                            reversed_name = " ".join(reversed(food_name_clean.split()))
+                            match = df_nutrients[
+                                df_nutrients["Food Class"].str.contains(reversed_name, na=False)
+                            ]
+
                         if not match.empty:
                             food_info = match.iloc[0]
 

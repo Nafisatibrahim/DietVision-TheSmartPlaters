@@ -13,7 +13,7 @@ from Backend.Users_profile.user import oauth2  # Import OAuth2Component
 from utils.state_manager import init_session_state  # Import session state initializer
 from utils.styling import apply_custom_styles     # Import custom styling function
 from utils.ui_components import floating_chat  # Import floating chat component
-from Pages import home_page, upload_analyze_page, chat_page, profile_page
+from Pages import home_page, upload_analyze_page, chat_page, profile_page, dashboard_page, feedback_page  # Import page modules
 from Backend.Chatbot.chatbot import chatbot_ui  # Import chatbot UI
 from Backend.Users_profile.save_profile import save_user_profile, load_user_profile
 from Backend.Users_profile.save_preferences import save_user_preferences, load_user_preferences
@@ -178,7 +178,7 @@ def main():
 
     page = st.sidebar.radio(
         "Navigate",
-        ["🏠 Home", "🍽️ Upload & Analyze", "📊 Dashboard", "🤖 Chat", "👤 Profile"],
+        ["🏠 Home", "🍽️ Upload & Analyze","🤖 Chat", "👤 Profile",  "📊 Dashboard", "📝 Feedback"],
         key="nav"
     )
 
@@ -188,11 +188,13 @@ def main():
     elif page == "🍽️ Upload & Analyze":
         upload_analyze_page.show_upload_analyze_page(user)
     elif page == "📊 Dashboard":
-        st.info("Dashboard page coming soon...")
+        dashboard_page.show_dashboard_page(user)
     elif page == "🤖 Chat":
         chat_page.show_chat_page(user)
     elif page == "👤 Profile":
         profile_page.show_profile_page(user)
+    elif page == "📝 Feedback":
+        feedback_page.show_feedback_page(user)
 
     # Add bubble chat feature
     floating_chat()
