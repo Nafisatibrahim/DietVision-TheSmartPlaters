@@ -64,3 +64,77 @@ def show_home_page(user):
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # How to Use Instructions
+    st.markdown("---")
+    st.markdown("""
+    <div class="instructions-card">
+        <h3>📖 How to Use DietVision.ai</h3>
+        <div class="instruction-step">
+            <strong>Step 1: Upload Your Food 📸</strong><br>
+            Go to the "Upload & Analyze" page and upload a photo of your meal. You can also use the camera button to take a picture directly!
+        </div>
+        <div class="instruction-step">
+            <strong>Step 2: Get AI Analysis 🤖</strong><br>
+            Click "Analyze Food" and our AI will identify your meal and provide detailed nutritional information including calories, protein, carbs, and more.
+        </div>
+        <div class="instruction-step">
+            <strong>Step 3: Log Your Meals 📝</strong><br>
+            Save your analyzed meals to track your nutrition over time. All your meals will be stored in your personal dashboard.
+        </div>
+        <div class="instruction-step">
+            <strong>Step 4: View Your Dashboard 📊</strong><br>
+            Check your nutrition dashboard to see your daily, weekly, and monthly progress with interactive charts and statistics.
+        </div>
+        <div class="instruction-step">
+            <strong>Step 5: Chat with Ella 💬</strong><br>
+            Ask Ella, your AI nutrition assistant, any questions about your diet, meal planning, or nutrition advice!
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Demo Video Section
+    st.markdown("---")
+    st.markdown("""
+    <div class="demo-section">
+        <h3>🎥 Watch the Demo</h3>
+        <p style="color: #555; margin-bottom: 1rem;">See DietVision.ai in action! Watch how easy it is to track your nutrition.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Video player (placeholder - user will add their mp4 file)
+    demo_video_path = "attached_assets/demo_video.mp4"  # Update this path with your actual video
+    
+    try:
+        video_file = open(demo_video_path, 'rb')
+        video_bytes = video_file.read()
+        st.video(video_bytes)
+        video_file.close()
+    except FileNotFoundError:
+        st.info("📹 Demo video coming soon! Upload your demo_video.mp4 to the attached_assets folder.")
+    
+    # Social Links Section
+    st.markdown("---")
+    st.markdown("### 🔗 Connect With Me")
+    st.markdown("""
+    <div class="social-links-container">
+        <a href="https://www.linkedin.com/in/nafisatibrahim" target="_blank" class="social-link">
+            💼 LinkedIn
+        </a>
+        <a href="https://github.com/Nafisatibrahim" target="_blank" class="social-link">
+            💻 GitHub
+        </a>
+        <a href="https://medium.com/@nafisat.ibrahim" target="_blank" class="social-link">
+            ✍️ Medium
+        </a>
+        <a href="YOUR_POWERPOINT_URL" target="_blank" class="social-link">
+            📊 PowerPoint Slides
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <p style="text-align: center; color: #666; margin-top: 1rem; font-size: 0.9rem;">
+        Built with ❤️ • Feel free to connect and share feedback!
+    </p>
+    """, unsafe_allow_html=True)

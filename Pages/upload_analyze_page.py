@@ -52,6 +52,10 @@ def show_upload_analyze_page(user):
                         "all_scores": scores
                     }
 
+                    # Reset Ella’s chat so new meal context is included next time
+                    st.session_state.pop("ella_chat", None)
+
+
                     # Display result
                     st.markdown(f"""
                         <div style="

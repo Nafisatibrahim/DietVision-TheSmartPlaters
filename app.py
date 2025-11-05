@@ -5,6 +5,7 @@ Handles dynamic page navigation
 
 # Import libraries
 import streamlit as st
+import pandas as pd
 import requests
 import os
 import json
@@ -14,8 +15,26 @@ from utils.styling import apply_custom_styles     # Import custom styling functi
 from utils.ui_components import floating_chat  # Import floating chat component
 from Pages import home_page, upload_analyze_page, chat_page, profile_page
 from Backend.Chatbot.chatbot import chatbot_ui  # Import chatbot UI
-from Backend.Users_profile.save_profile import save_user_profile
+from Backend.Users_profile.save_profile import save_user_profile, load_user_profile
+from Backend.Users_profile.save_preferences import save_user_preferences, load_user_preferences
+
 from dotenv import load_dotenv
+
+# Load nutrient database into session state
+@st.cache_data
+def load_nutrient_database():
+    return pd.read_csv("Datasets/Nutrient_Database.csv")
+
+# Load user profile and preferences
+@st.cache_data
+def load_user_data(email):
+    try:
+        profile = load_user_profile(email)
+        prefs = load_user_preferences(email)
+        return profile, prefs
+    except Exception as e:
+        st.warning(f"⚠️ Could not load user data: {e}")
+        return None, None
 
 load_dotenv()
 # Automatically choose redirect URI based on environment
@@ -29,6 +48,10 @@ def main():
     # Initialize session state and apply custom styles
     init_session_state()
     apply_custom_styles()
+
+    # Load nutrient database into session state if not already loaded
+    if "nutrient_database" not in st.session_state:
+        st.session_state["nutrient_database"] = load_nutrient_database()
 
     # Restore cached token if available
     if "auth_token_cached" in st.session_state and "token" not in st.session_state:
@@ -118,6 +141,22 @@ def main():
                 st.session_state["user_saved"] = True  # mark as saved
             except Exception as e:
                 st.warning(f"⚠️ Unable to sync with Google Sheets. Error: {e}")
+
+    # 🔄 Load user profile and preferences after login
+    email = user_info.get("email", "")
+    if email:
+        profile, prefs = load_user_data(email)
+
+        if profile:
+            st.session_state["user_info"] = profile
+        if prefs:
+            st.session_state["user_preferences"] = prefs
+            st.session_state["user_profile"] = prefs  # alias for profile_page
+
+        if (profile or prefs) and "profile_restored" not in st.session_state:
+            st.toast("✅ Welcome back! Your profile has been restored.", icon="🌿")
+            st.session_state["profile_restored"] = True
+
                 
     else:
         # Handle failed user info fetch

@@ -6,14 +6,19 @@ Display user's information and account details.
 import streamlit as st
 import base64
 from datetime import datetime
-from Backend.Users_profile.save_preferences import save_user_preferences
+from Backend.Users_profile.save_profile import save_user_profile, load_user_profile
+from Backend.Users_profile.save_preferences import save_user_preferences, load_user_preferences
 
 def show_profile_page(user):
     st.title("👤 Your Profile")
 
+    # Check if user is signed in
     if not user or not isinstance(user, dict):
         st.warning("⚠️ Please sign in to view your profile.")
         return
+
+    # Get user info from session
+    st.session_state["user_info"] = user
 
     # User info
     full_name = user.get("name", "Unknown User")
@@ -30,6 +35,15 @@ def show_profile_page(user):
     if "user_profile" not in st.session_state:
         st.session_state.user_profile = {}
 
+    # Load existing profile from Google Sheets on first page visit
+    if 'profile_loaded' not in st.session_state:
+        st.session_state.profile_loaded = True
+        
+        saved_prefs = load_user_preferences(email)
+        if saved_prefs:
+            st.session_state.user_profile = saved_prefs
+            st.info("✅ Loaded your profile from Google Sheets!")
+
     # Profile Header
     st.markdown("""
         <div style="
@@ -40,7 +54,7 @@ def show_profile_page(user):
             text-align: center;
         ">
             <h2 style="color:#2E7D32;">🌿 Welcome back!</h2>
-            <p style="font-size:1.1rem; color:#555;">Here’s your account information.</p>
+            <p style="font-size:1.1rem; color:#555;">Here's your account information.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -76,6 +90,14 @@ def show_profile_page(user):
             user["name"] = st.session_state.editable_name
             user["bio"] = st.session_state.editable_bio
             user["picture"] = st.session_state.uploaded_profile_pic
+
+            # Save to Google Sheets with proper error handling
+            success, message = save_user_profile(user)
+            if success:
+                st.success("✅ Profile updated successfully!")
+                st.info(message)
+            else:
+                st.error(f"❌ Save failed: {message}")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -154,15 +176,38 @@ def show_profile_page(user):
             "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
 
-        with st.spinner("Saving your preferences..."):
-            result = save_user_preferences(
-                email=user.get("email", ""),
+        with st.spinner("Saving to Google Sheets..."):
+            # Save with proper error handling
+            profile_success, profile_msg = save_user_profile(user)
+            prefs_success, prefs_msg = save_user_preferences(
+                email=email,
                 preferences=st.session_state.user_profile
             )
 
-            st.success("✅ Profile saved successfully!")
-            st.info(result)
+            # Only show success if BOTH operations succeeded
+            if profile_success and prefs_success:
+                st.success("✅ Profile and preferences saved!")
+                st.info(f"📊 {profile_msg}")
+                st.info(f"💚 {prefs_msg}")
+            else:
+                # Show specific errors
+                if not profile_success:
+                    st.error(f"❌ Profile save failed: {profile_msg}")
+                else:
+                    st.info(f"✅ {profile_msg}")
+                    
+                if not prefs_success:
+                    st.error(f"❌ Preferences save failed: {prefs_msg}")
+                else:
+                    st.info(f"✅ {prefs_msg}")
 
+
+        # Make the new data visible to the chatbot
+        st.session_state["user_info"] = user # OAuth user details
+        st.session_state["user_preferences"] = st.session_state.user_profile
+
+        # Reset Ella’s chat so the next message includes updated context
+        st.session_state.pop("ella_chat", None)
 
     # Display current profile
     if st.session_state.user_profile:
@@ -179,7 +224,6 @@ def show_profile_page(user):
             <p><strong>Dietary Preferences:</strong> {', '.join(profile.get('dietary_preferences', ['Not set']))}</p>
         </div>
         """, unsafe_allow_html=True)
-
 
     # Account Settings Section
     st.markdown("<br>", unsafe_allow_html=True)

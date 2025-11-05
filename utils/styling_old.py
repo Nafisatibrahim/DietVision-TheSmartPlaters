@@ -20,17 +20,9 @@ def apply_custom_styles():
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             padding: 2rem;
-            margin: 1rem auto;
-            max-width: 1400px;
+            margin: 1rem;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(15px);
-        }
-                
-        /* Make content even wider on very large screens */
-        @media (min-width: 1600px) {
-            .main .block-container {
-                max-width: 1600px;
-            }
         }
 
         /* Buttons */
@@ -63,7 +55,7 @@ def apply_custom_styles():
         /* Responsive Feature Section */
         .feature-container {
             display: flex;
-            flex-wrap: wrap;  /* ✅ FIXED - Now wraps on mobile */
+            flex-wrap: wrap; 
             justify-content: center;
             gap: 1rem;
             margin-top: 1.5rem;
@@ -74,7 +66,7 @@ def apply_custom_styles():
             border-radius: 15px;
             padding: 1.2rem;
             flex: 1 1 300px;
-            max-width: 350px;  /* ✅ FIXED - Better control */
+            max-width: 350px;
             text-align: center;
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -96,70 +88,20 @@ def apply_custom_styles():
             font-size: 0.95rem;
         }
 
-        /* Instructions section */
-        .instructions-card {
-            background: linear-gradient(135deg, #E8F5E8, #FFF3E0);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .instructions-card h3 {
-            color: #2E7D32;
-            margin-bottom: 1rem;
-        }
-        
-        .instruction-step {
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #4CAF50;
-        }
-        
-        /* Social links section */
-        .social-links-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        
-        .social-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #4CAF50, #8BC34A);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-        }
-        
-        .social-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
-            color: white;
-            text-decoration: none;
-        }
-        
-        /* Demo video section */
-        .demo-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .demo-section h3 {
-            color: #FF6F00;
-            margin-bottom: 1rem;
+        /* 📱 Mobile responsiveness */
+        @media (max-width: 768px) {
+            .feature-box {
+                flex: 1 1 100%;
+                min-width: 90%;
+                max-width: 95%;
+                padding: 1rem;
+            }
+            .feature-box h3 {
+                font-size: 1.1rem;
+            }
+            .feature-box p {
+                font-size: 0.9rem;
+            }
         }
 
         /* Footer */
@@ -176,15 +118,15 @@ def apply_custom_styles():
         section[data-testid="stSidebar"] {
             display: flex;
             flex-direction: column;
-            height: auto !important;
-            min-height: 100vh;
-            overflow-y: auto !important;
+            height: auto !important; /* allow natural fit */
+            min-height: 100vh; /* still fills screen */
+            overflow-y: auto !important; /* scroll only if too long */
             padding-bottom: 1rem;
         }
 
         /* Sidebar inner content */
         section[data-testid="stSidebar"] > div:first-child {
-            flex-grow: 0;
+            flex-grow: 0; /* prevent forced stretching */
             overflow-y: visible;
         }
 
@@ -210,43 +152,6 @@ def apply_custom_styles():
         /* Reduce spacing after profile image and name */
         section[data-testid="stSidebar"] img {
             margin-bottom: 0.2rem !important;
-        }
-
-        /* 📱 Mobile responsiveness */
-        @media (max-width: 768px) {
-            .feature-box {
-                flex: 1 1 100%;
-                min-width: 90%;
-                max-width: 95%;
-                padding: 1rem;
-            }
-            
-            .feature-box h3 {
-                font-size: 1.1rem;
-            }
-            
-            .feature-box p {
-                font-size: 0.9rem;
-            }
-            
-            .social-links-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .social-link {
-                width: 80%;
-                text-align: center;
-            }
-            
-            .instruction-step {
-                padding: 0.8rem;
-            }
-            
-            .main .block-container {
-                padding: 1rem;
-                margin: 0.5rem;
-            }
         }
 
     </style>
