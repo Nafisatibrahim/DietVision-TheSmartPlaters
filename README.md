@@ -1,50 +1,67 @@
-# DietVision-TheSmartPlaters
+# 🍽️ DietVision.ai — Your AI-Powered Nutrition Assistant
 ## Women in AI Canada Hackathon 2025
-AI-powered nutrition assistant that detects food and recommends healthier alternatives.
 
+**DietVision.ai** is a Streamlit-based prototype that uses AI and computer vision to analyze meals, provide nutritional insights, and offer personalized diet recommendations through an intelligent chatbot named **Ella**.
 
-Google authentication (OAuth2Component)
-User info fetched from Google API
-User data persisted locally in users.csv
-Session management (sign in/out, refresh token)
+This project was developed as part of the **Women in AI Hackathon 2025** to demonstrate how AI can make nutrition **accessible, personalized, and data-driven**.
 
+---
 
+## 🌟 Features
 
-"""def show_home_page(user):
-    st.title("🏠 Home")
-    st.write(f"Welcome, {user.get('name')}!")
-    st.write("This is the home page of DietVision.ai. Use the sidebar to navigate through the app.")
-    st.write("Feel free to explore the features we offer to help you with your nutrition and healthy habits.")
-    st.write("Stay tuned for more updates and features coming soon!")   
-    st.write("Here are some quick links to get you started:")
-    st.markdown("- [🍽️ Upload & Analyze](#) - Upload your meals and get nutritional analysis."
-                "\n- [📊 Dashboard](#) - View your nutrition dashboard and track your progress."
-                "\n- [🤖 Chat with Ella](#) - Get personalized nutrition advice from our AI assistant."
-                "\n- [👤 Profile](#) - View and edit your profile information.")
-    
+✅ **Image-based food recognition**
+- Upload a meal photo, and the app predicts what it is using a Vertex AI image classification model.  
+- Displays calorie count and full nutritional breakdown.
 
-    st.info("Tip: Use the sidebar to navigate between pages.")
-    
-"""
+💬 **Chat with Ella**
+- Ella provides nutrition tips and tailored recommendations based on your health profile.
+- Profile-aware: for example, users with high cholesterol receive low-fat food advice.
 
-Step 3: Next Upgrade Options
+👤 **User Profiles**
+- Sign in securely via Google OAuth2.
+- Save personal details, preferences, health goals, and dietary restrictions.
 
-Once the base chatbot works, we can add:
+📊 **Nutrition Dashboard**
+- Visualize macronutrients, calories, and sample trends.
+- Note: currently a prototype — live tracking and meal logging will be added in future updates.
 
-🔗 Context awareness (e.g., user’s last meal analysis, health goals)
+💚 **Feedback Page**
+- Users can rate their experience and submit feedback directly from the app.
+- All responses are saved securely to Google Sheets via the service account.
 
-💾 User profiles (store chats or preferences in a JSON/DB)
+---
 
-🧠 Specialized prompts (“explain macros”, “suggest a breakfast plan”)
+## 🏗️ Tech Stack
 
-🧑‍🎤 Custom UI (avatar, header, toggle between chatbot and analysis view)
+| Component | Technology |
+|------------|-------------|
+| Frontend | Streamlit |
+| Backend | Python (FastAPI-like structure within Streamlit) |
+| Authentication | Google OAuth2 |
+| AI Model | Vertex AI AutoML Image Classification |
+| Storage | Google Sheets + CSV fallback |
+| Visualization | Matplotlib, Pandas |
+| Deployment | Streamlit Cloud |
+| Database | CSV (prototype), Google Sheets (cloud sync) |
 
+---
 
-prompt = f"User just analyzed a plate with {detected_food}. Give short feedback and healthy alternatives."
-generate_response(prompt)
+## 🔐 Authentication & Data Privacy
+
+- OAuth2 authentication is handled securely via Google Sign-In.
+- User data (profiles, preferences, feedback) is stored in **Google Sheets** under your service account.
+- No data is shared publicly; this project is for demonstration and educational purposes only.
+
+---
+
+## 🚀 How to Run Locally
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters.git
+cd DietVision-TheSmartPlaters
+
 
 <div class="chat-button" onclick="window.parent.postMessage('toggle_chat', '*')">
     <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" width="32"/>
 </div>
-
-background-color: #4CAF50;
