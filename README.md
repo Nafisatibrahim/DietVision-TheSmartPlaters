@@ -54,14 +54,30 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 ---
 
-## 🚀 How to Run Locally
+## 📸 Demo Screenshot
 
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters.git
-cd DietVision-TheSmartPlaters
+<p align="center">
+  <img src="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/blob/main/assets/demo_screenshot.png" width="80%" alt="DietVision.ai App Screenshot"/>
+</p>
 
+---
 
-<div class="chat-button" onclick="window.parent.postMessage('toggle_chat', '*')">
-    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" width="32"/>
-</div>
+## 👩🏽‍💻 Author
+
+**Nafisat Ibrahim**  
+Data Scientist • Machine Learning • MMATH Data Science, University of Waterloo 
+
+📍 *Based in Canada*  
+📫 Reach me on [LinkedIn](https://www.linkedin.com/in/nafisatibrahim/) or explore my [GitHub projects](https://github.com/NafisatIbrahim)
+
+---
+
+## 🚧 Prototype Notice
+> This project is a **prototype** developed for the Women in AI Hackathon 2025.  
+> Some features (like persistent meal history and dashboard updates) are part of **future work** and may not be fully functional yet.
+
+---
+
+## 🧾 License
+This project is shared for educational and prototype demonstration purposes.  
+© 2025 **Nafisat Ibrahim** — All rights reserved

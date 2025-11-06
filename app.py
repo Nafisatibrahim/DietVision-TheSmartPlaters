@@ -49,6 +49,33 @@ def main():
     init_session_state()
     apply_custom_styles()
 
+    # Handle cached token and user session
+    if os.path.exists("token_cache.json"):
+        try:
+            with open("token_cache.json", "r") as f:
+                cached_token = json.load(f)
+
+            # Extract email safely if present
+            cached_email = ""
+            if isinstance(cached_token, dict):
+                cached_email = cached_token.get("email", "").lower() or ""
+
+            # If a user is logged in and cache belongs to someone else — clear it
+            if "user" in st.session_state and isinstance(st.session_state["user"], dict):
+                session_email = st.session_state["user"].get("email", "").lower()
+                if cached_email and cached_email != session_email:
+                    st.warning("⚠️ Mismatched user detected — clearing old session.")
+                    for k in ["token", "auth_token_cached", "user"]:
+                        st.session_state.pop(k, None)
+                    os.remove("token_cache.json")
+
+            # If no user yet but cache exists, defer clearing until after Google login
+            elif not cached_email:
+                os.remove("token_cache.json")
+
+        except Exception as e:
+            st.warning(f"⚠️ Token cache issue: {e}")
+
     # Load nutrient database into session state if not already loaded
     if "nutrient_database" not in st.session_state:
         st.session_state["nutrient_database"] = load_nutrient_database()
