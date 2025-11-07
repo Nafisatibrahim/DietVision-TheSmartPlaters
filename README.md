@@ -8,13 +8,14 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 ## 🎥 Demo Video
 
 <p align="center">
-  <video width="80%" controls>
-    <source src="[https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/raw/main/Assets/dietvision-demo-video.mp4](https://github.com/Nafisatibrahim/DietVision-TheSmartPlaters/blob/main/Assets/dietvision-demo-video.mp4)" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <img src="Assets/dietvision-demo-preview.gif" width="80%">
 </p>
 
-<p align="center"><i>🎬 Watch the full DietVision.ai demo above!</i></p>
+<p align="center">
+  <a href="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/releases/latest/download/dietvision-demo-video.mp4">
+    ⬇️ Download the full 3-minute DietVision.ai demo video
+  </a>
+</p>
 
 ---
 
@@ -62,14 +63,6 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 - OAuth2 authentication is handled securely via Google Sign-In.
 - User data (profiles, preferences, feedback) is stored in **Google Sheets** under your service account.
 - No data is shared publicly; this project is for demonstration and educational purposes only.
-
----
-
-## 📸 Demo Screenshot
-
-<p align="center">
-  <img src="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/blob/main/assets/demo_screenshot.png" width="80%" alt="DietVision.ai App Screenshot"/>
-</p>
 
 ---
 
