@@ -7,11 +7,14 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 ## 🎥 Demo Video
 
-[![Watch on YouTube](https://img.youtube.com/vi/BMKyicebEIg/maxresdefault.jpg)](https://youtu.be/BMKyicebEIg)
-
+<p align="center">
+  <a href="https://youtu.be/BMKyicebEIg" target="_blank">
+    <img src="https://img.youtube.com/vi/BMKyicebEIg/maxresdefault.jpg" alt="Watch on YouTube" width="80%">
+  </a>
+</p>
 
 <p align="center">
-  <a href="https://drive.google.com/file/d/1ZlsaB90J-a7y3JK5_E7qIPm8NN2EESiuYSq37maOzpc/view?usp=sharing">
+  <a href="https://drive.google.com/file/d/1ZlsaB90J-a7y3JK5_E7qIPm8NN2EESiuYSq37maOzpc/view?usp=sharing" target="_blank">
     ▶️ Watch the full 3-minute <b>DietVision.ai</b> demo video on Google Drive
   </a>
 </p>
@@ -23,10 +26,11 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 </p>
 
 <p align="center">
-  <a href="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/releases/latest/download/dietvision-demo-video.mp4">
+  <a href="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/releases/latest/download/dietvision-demo-video.mp4" target="_blank">
     ⬇️ Download the full 3-minute <b>DietVision.ai</b> demo video
   </a>
 </p>
+
 
 ## 🌟 Features
 
