@@ -20,6 +20,13 @@ from Backend.Users_profile.save_preferences import save_user_preferences, load_u
 
 from dotenv import load_dotenv
 
+# --- Branding ---
+st.set_page_config(
+    page_title="DietVision.ai",
+    page_icon="🍽️",
+    layout="wide",
+)
+
 # Load nutrient database into session state
 @st.cache_data
 def load_nutrient_database():
