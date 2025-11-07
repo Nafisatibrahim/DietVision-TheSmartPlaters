@@ -6,12 +6,18 @@
 This project was developed as part of the **Women in AI Hackathon 2025** to demonstrate how AI can make nutrition **accessible, personalized, and data-driven**.
 
 ## 🎥 Demo Video
+
 <p align="center">
-  <video width="80%" controls>
-    <source src="https://github.com/Nafisatibrahim/DietVision-TheSmartPlaters/raw/main/Assets/dietvision-demo-sample-video.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <img src="Assets/dietvision-demo-gif.gif" width="80%">
 </p>
+
+<p align="center">
+  <a href="https://drive.google.com/file/d/1ZlsaB90J-a7y3JK5_E7qIPm8NN2EESiuYSq37maOzpc/view?usp=sharing">
+    ▶️ Watch the full 3-minute <b>DietVision.ai</b> demo video on Google Drive
+  </a>
+</p>
+
+---
 
 <p align="center">
   <img src="Assets/dietvision-demo-preview.gif" width="80%">
@@ -19,11 +25,9 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 <p align="center">
   <a href="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/releases/latest/download/dietvision-demo-video.mp4">
-    ⬇️ Download the full 3-minute DietVision.ai demo video
+    ⬇️ Download the full 3-minute <b>DietVision.ai</b> demo video
   </a>
 </p>
-
----
 
 ## 🌟 Features
 
