@@ -9,7 +9,7 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 <p align="center">
   <a href="https://youtu.be/BMKyicebEIg" target="_blank">
-    <img src="https://img.youtube.com/vi/BMKyicebEIg/maxresdefault.jpg" alt="Watch on YouTube" width="80%">
+    <img src="https://img.youtube.com/vi/BMKyicebEIg/0.jpg" alt="Watch the demo on YouTube" width="80%">
   </a>
 </p>
 
@@ -31,6 +31,7 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
   </a>
 </p>
 
+--
 
 ## 🌟 Features
 
