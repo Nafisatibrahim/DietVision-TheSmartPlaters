@@ -7,9 +7,8 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 ## 🎥 Demo Video
 
-<p align="center">
-  <img src="Assets/dietvision-demo-gif.gif" width="80%">
-</p>
+[![Watch on YouTube](https://img.youtube.com/vi/BMKyicebEIg/maxresdefault.jpg)](https://youtu.be/BMKyicebEIg)
+
 
 <p align="center">
   <a href="https://drive.google.com/file/d/1ZlsaB90J-a7y3JK5_E7qIPm8NN2EESiuYSq37maOzpc/view?usp=sharing">
