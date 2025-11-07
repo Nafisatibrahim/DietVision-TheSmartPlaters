@@ -6,6 +6,12 @@
 This project was developed as part of the **Women in AI Hackathon 2025** to demonstrate how AI can make nutrition **accessible, personalized, and data-driven**.
 
 ## 🎥 Demo Video
+<p align="center">
+  <video width="80%" controls>
+    <source src="https://github.com/Nafisatibrahim/DietVision-TheSmartPlaters/raw/main/Assets/dietvision-demo-sample-video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
 
 <p align="center">
   <img src="Assets/dietvision-demo-preview.gif" width="80%">
