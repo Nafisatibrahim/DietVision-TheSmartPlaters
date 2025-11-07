@@ -65,6 +65,26 @@ def show_home_page(user):
     </div>
     """, unsafe_allow_html=True)
 
+    # Demo Video Section
+    st.markdown("---")
+    st.markdown("""
+    <div class="demo-section">
+        <h3>🎥 Watch the Demo</h3>
+        <p style="color: #555; margin-bottom: 1rem;">See DietVision.ai in action! Watch how easy it is to track your nutrition.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Video player
+    demo_video_path = "Assets/dietvision-demo-video.mp4"
+    
+    try:
+        video_file = open(demo_video_path, 'rb')
+        video_bytes = video_file.read()
+        st.video(video_bytes)
+        video_file.close()
+    except FileNotFoundError:
+        st.info("📹 Demo video coming soon! Upload your demo_video.mp4 to the attached_assets folder.")
+    
     # How to Use Instructions
     st.markdown("---")
     st.markdown("""
@@ -92,27 +112,7 @@ def show_home_page(user):
         </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Demo Video Section
-    st.markdown("---")
-    st.markdown("""
-    <div class="demo-section">
-        <h3>🎥 Watch the Demo</h3>
-        <p style="color: #555; margin-bottom: 1rem;">See DietVision.ai in action! Watch how easy it is to track your nutrition.</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Video player (placeholder - user will add their mp4 file)
-    demo_video_path = "attached_assets/demo_video.mp4"  # Update this path with your actual video
-    
-    try:
-        video_file = open(demo_video_path, 'rb')
-        video_bytes = video_file.read()
-        st.video(video_bytes)
-        video_file.close()
-    except FileNotFoundError:
-        st.info("📹 Demo video coming soon! Upload your demo_video.mp4 to the attached_assets folder.")
-    
+
     # Social Links Section
     st.markdown("---")
     st.markdown("### 🔗 Connect With Me")

@@ -143,8 +143,9 @@ def show_profile_page(user):
                                      st.session_state.user_profile.get('ethnicity', 'Asian')))
         
         cuisine = st.multiselect("🍜 Preferred Cuisines", 
-                                ["American", "Italian", "Chinese", "Indian", "Mexican", "Japanese", 
-                                 "Mediterranean", "Thai", "French", "Korean", "Other"],
+                                ["African", "American", "Italian", "Chinese", "Indian", "Mexican", "Japanese", 
+                                 "Mediterranean", "Thai", "Caribbean", "Middle Eastern", "Latin American", "South American",
+                                 "French", "Korean", "Other"],
                                 default=st.session_state.user_profile.get('cuisine', []))
         
         activity_level = st.selectbox("🏃‍♀️ Activity Level",

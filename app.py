@@ -109,6 +109,21 @@ def main():
 
     # Authentication: handles sign-in
     if "token" not in st.session_state:
+        # ⛔ Display privacy notice and desktop note before sign-in
+        st.markdown("""
+            <div style="background-color:#FFF3CD; border:1px solid #FFEEBA; border-radius:10px; padding:1rem; margin-bottom:1.5rem;">
+                ⚠️ <strong>Note:</strong> DietVision.ai works best on <b>desktop</b>.  
+                The mobile version is coming soon 📱.
+            </div>
+
+            <div style="background-color:#E8F5E9; border:1px solid #C8E6C9; border-radius:10px; padding:1rem; margin-bottom:1.5rem;">
+                🔒 <strong>Privacy Notice:</strong> Only your <b>name</b>, <b>email</b>, and <b>profile picture</b> 
+                will be used to create your DietVision.ai profile.  
+                Your data stays private (for your eyes only 🤝).
+            </div>
+        """, unsafe_allow_html=True)
+
+    if "token" not in st.session_state:
         result = oauth2.authorize_button(
             "Sign in with Google",
             redirect_uri,
