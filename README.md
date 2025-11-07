@@ -9,7 +9,7 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
 
 <p align="center">
   <video width="80%" controls>
-    <source src="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/raw/main/Assets/dietvision-demo-video.mp4" type="video/mp4">
+    <source src="[https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/raw/main/Assets/dietvision-demo-video.mp4](https://github.com/Nafisatibrahim/DietVision-TheSmartPlaters/blob/main/Assets/dietvision-demo-video.mp4)" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </p>
