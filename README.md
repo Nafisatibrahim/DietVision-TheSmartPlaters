@@ -25,13 +25,7 @@ This project was developed as part of the **Women in AI Hackathon 2025** to demo
   <img src="Assets/dietvision-demo-preview.gif" width="80%">
 </p>
 
-<p align="center">
-  <a href="https://github.com/NafisatIbrahim/DietVision-TheSmartPlaters/releases/latest/download/dietvision-demo-video.mp4" target="_blank">
-    ⬇️ Download the full 3-minute <b>DietVision.ai</b> demo video
-  </a>
-</p>
-
---
+---
 
 ## 🌟 Features
 
